@@ -1,0 +1,58 @@
+﻿@model CS4790Assignment4.Models.Fruit
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Fruit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FruitTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FruitTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contributor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contributor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Popularity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Popularity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FruitPic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FruitPic)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

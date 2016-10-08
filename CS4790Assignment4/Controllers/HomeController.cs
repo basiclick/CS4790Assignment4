@@ -10,7 +10,7 @@ namespace CS4790Assignment4.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Fruits");
         }
 
         public ActionResult About()
