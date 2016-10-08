@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="text-warning text-center">Nine Fruits FruitDB</h2>
 
 <p>
 
@@ -48,7 +48,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FruitPic)
+                <img class="img-responsive img-rounded img-thumbnail" src="@Html.DisplayFor(modelItem => item.FruitPic)" />
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
