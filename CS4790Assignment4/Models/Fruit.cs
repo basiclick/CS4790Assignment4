@@ -12,6 +12,8 @@ namespace CS4790Assignment4.Models
     {
         public int FruitID { get; set; }
         public string FruitTitle { get; set; }
+
+        [StringLength(45, MinimumLength = 4)]
         public string Contributor { get; set; }
 
         [Range(1, 100)]

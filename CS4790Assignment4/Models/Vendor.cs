@@ -17,6 +17,7 @@ namespace CS4790Assignment4.Models
         public string VendorName { get; set; }
 
         [Required]
+        [Display(Name = "Card on File")]
         [DataType(DataType.CreditCard)]
         public int CreditCardNumber { get; set; }
 

@@ -8,10 +8,13 @@
 <h2 class="text-warning text-center">Nine Fruits FruitDB</h2>
 
 <p>
-
-    @Html.ActionLink("Create New", "Create")
-
-   
+    <div class="jumbotron">
+        <h2>
+            @Html.ActionLink("Create New", "Create")
+            <br />
+            @Html.ActionLink("VendorViewModel", "Index", "Vendors")
+        </h2>
+   </div>
 </p>
 
 @using (Html.BeginForm("Index", "Fruits", FormMethod.Get))// overRide to get instead of default post
