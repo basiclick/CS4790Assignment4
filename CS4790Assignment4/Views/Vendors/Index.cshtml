@@ -1,0 +1,54 @@
+﻿@model CS4790Assignment4.ViewModels.VendorFruits
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>FruitVendors</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastName
+        </th>
+        <th>
+            VendorName
+        </th>
+        <th>
+            CreditCardNumber
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Vendors)
+    {
+        string currentRow = "";
+        if (item.VendorID == ViewBag.VendorID)
+        {
+            currentRow = "warning";
+        }
+        <tr class="@currentRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VendorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditCardNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.VendorID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.VendorID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.VendorID })
+            </td>
+        </tr>
+    }
+
+</table>

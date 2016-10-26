@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CS4790Assignment4.Models;
+using CS4790Assignment4.DAL;
+using PagedList; //pagedlist.mvc from nuget
+
 
 namespace CS4790Assignment4.Controllers
 {
@@ -15,9 +18,58 @@ namespace CS4790Assignment4.Controllers
         private FruitDBContext db = new FruitDBContext();
 
         // GET: Fruits
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Fruits.ToList());
+            ViewBag.TitleSortParm = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.ContSortParm = sortOrder == "cont" ? "cont_desc" : "Cont";
+            ViewBag.PopularitySortParm = sortOrder == "popularity" ? "popularity_desc" : "Popularity";
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            var fruit = from s in db.Fruits
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                fruit = fruit.Where(s => s.FruitTitle.ToUpper().Contains(searchString.ToUpper()) || s.Contributor.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    fruit = fruit.OrderByDescending(s => s.FruitTitle);
+                    break;
+                case "Cont":
+                    fruit = fruit.OrderBy(s => s.Contributor);
+                    break;
+                case "cont_desc":
+                    fruit = fruit.OrderByDescending(s => s.Contributor);
+                    break;
+                case "popularity_desc":
+                    fruit = fruit.OrderByDescending(s => s.Popularity);
+                    break;
+                case "popularity":
+                    fruit = fruit.OrderBy(s => s.Popularity);
+                    break;
+                default:
+                    fruit = fruit.OrderBy(s => s.FruitTitle);
+                    break;
+            }
+
+            int pageSize = 4; // only show 4 results per page
+            int pageNumber = (page ?? 1); // if page has value assign that else 1
+
+
+
+            return View(fruit.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Fruits/Details/5

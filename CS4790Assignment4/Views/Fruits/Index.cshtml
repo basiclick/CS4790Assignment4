@@ -1,7 +1,8 @@
-﻿@model IEnumerable<CS4790Assignment4.Models.Fruit>
+﻿@model PagedList.IPagedList<CS4790Assignment4.Models.Fruit>
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Fruit";
 }
 
 <h2 class="text-warning text-center">Nine Fruits FruitDB</h2>
@@ -12,22 +13,28 @@
 
    
 </p>
+
+@using (Html.BeginForm("Index", "Fruits", FormMethod.Get))// overRide to get instead of default post
+{ <p>
+        Search by FruitTitle or Contributor: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p> }
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FruitTitle)
+            @Html.ActionLink("Fruit Title", "Index", new { sortOrder = ViewBag.TitleSortParm }) 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Contributor)
+            @Html.ActionLink("Contributor", "Index", new { sortOrder = ViewBag.ContSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Popularity)
+            @Html.ActionLink("Popularity", "Index", new { sortOrder = ViewBag.PopularitySortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+           Price
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FruitPic)
+           Fruit Picture
         </th>
         <th></th>
     </tr>
@@ -51,11 +58,16 @@
                 <img class="img-responsive img-rounded img-thumbnail" src="@Html.DisplayFor(modelItem => item.FruitPic)" />
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.FruitID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.FruitID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.FruitID })
             </td>
         </tr>
     }
 
 </table>
+<br/>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
